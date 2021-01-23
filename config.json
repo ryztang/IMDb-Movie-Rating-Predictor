@@ -1,3 +1,3 @@
 {
-  "sample_size": <Preferred sample size, must be <= total number of records>
+  "sample_size": "Enter preferred sample size here, must be <= total number of records"
 }

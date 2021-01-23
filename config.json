@@ -1,3 +1,3 @@
 {
-  "sample_size": 500000
+  "sample_size": <Preferred sample size, must be <= total number of records>
 }

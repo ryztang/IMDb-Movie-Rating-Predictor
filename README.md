@@ -9,6 +9,12 @@ Model creation and training begins with defining the feature columns used in the
   
 Model prediction uses the trained model to predict a final rating for the movie.
 
+#### Summary of Results:
+
+Training accuracy: **~80%**  
+Validation and testing accuracy: **~65%**  
+See [Model](#model) for more details.
+
 Below is a diagram of the data flow.
 
 ### Data Flow Diagram:
@@ -17,8 +23,8 @@ Below is a diagram of the data flow.
 As shown above, data from IMDb datasets are first preprocessed, then used to train the model.  
 Below is a diagram of the relationships between these datasets, including the fields used for this project.  
 
-### IMDb Datasets Diagram:
-![New Release DB Diagram](diagrams/IMDb_Datasets_Diagram.png?raw=true)
+### IMDb Datasets Schema:
+![IMDb_Datasets_Schema](diagrams/IMDb_Datasets_Schema.png?raw=true)
 
 ## Libraries
 
@@ -30,7 +36,7 @@ Below is a diagram of the relationships between these datasets, including the fi
 
 Movie data is stored in 5 IMDb datasets: title_basics, name_basics, title_crew, title_principals, and title_ratings. These should be saved under a `datasets/` folder under the project's root directory (not included in this repo, see [Additional Notes](#additional-notes)). 
   
-Using pandas and numpy, title_basics and title_ratings are first joined to obtain all movies that have a rating. Then, title_crew and title_principals are processed to obtain information about the people who worked on those movies. The preprocessed data is stored in a final dataframe that includes columns for nconst (i.e. name ID), category (e.g. director, writer, etc.), startYear (i.e. release date), genres, and averageRating. Thus, the averageRating in each row is the label for the respective nconst, category, startYear, and genre combination. There are around 3000000 records in total. The sample size of the final dataframe can be adjusted in [config.json](config.json).
+Using pandas and numpy, title_basics and title_ratings are first joined to obtain all movies that have a rating. Then, title_crew and title_principals are processed to obtain information about the people who worked on those movies. The preprocessed data is stored in a final dataframe that includes columns for nconst (i.e. name ID), category (e.g. director, writer, etc.), startYear (i.e. release date), genres, and averageRating. Thus, the averageRating in each row is the label for the respective nconst, category, startYear, and genre combination. There are around 3,000,000 records in total. The sample size of the final dataframe can be adjusted in [config.json](config.json).
 
 name_basics is loaded and used to look up name IDs when predicting ratings.
 
@@ -44,7 +50,7 @@ Using tensorflow, the feature columns are defined to be nconst, category, startY
 
 The feature columns are used as the input layer to the neural network. Keras is used to define the layers. There are two hidden layers, both using ReLU activation function. The output layer uses softmax activation function to perform multi-class classification. The averageRating obtained from data preprocessing is rounded to the nearest integer to achieve higher accuracy. Thus, the predicted ratings can be integers from 0 to 10. A total of 5 epochs is currently used. 
 
-Training the model with around 3000000 records (the total number of records in the final dataframe) achieves a training accuracy of ~80% and a validation and testing accuracy of ~65%. Compared to the 1/11, or ~9%, chance of guessing the correct rating (0 to 10) without any training, this result is significantly better.
+Training the model with around 3,000,000 records (the total number of records in the final dataframe) achieves a training accuracy of ~80% and a validation and testing accuracy of ~65%. Compared to the 1/11, or ~9%, chance of guessing the correct rating (0 to 10) without any training, this result is significantly better.
 
 ### Predicting using model
 
